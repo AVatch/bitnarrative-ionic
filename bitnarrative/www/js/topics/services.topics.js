@@ -20,6 +20,18 @@ angular.module('bitnarrative.services.topics', [])
       return response;
     };
 
+    var getTopic = function(pk){
+      var token = Authentication.pullCachedToken().token;
+      var response = $http({
+                        url: DOMAIN + '/api/v1/topic/' + pk + '/',
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json',
+                                   'Authorization': 'Token ' + token },
+                        data: ''
+                      });
+      return response;
+    };
+
     var getCommunityList = function(pk){
       var token = Authentication.pullCachedToken().token;
       var response = $http({
@@ -33,6 +45,7 @@ angular.module('bitnarrative.services.topics', [])
 
     return{
       getTopicList: getTopicList,
+      getTopic: getTopic,
       getCommunityList: getCommunityList,
     };
 }])

@@ -5,34 +5,30 @@
   </ion-header-bar>
   <ion-content>
 
-    
-      
-      <div class="list">
-        <label class="item item-input">
-          <input type="text" placeholder="Name">
-        </label>
-        <label class="item item-input">
-          <textarea placeholder="Description" rows="10"></textarea>
-        </label>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Name" ng-model="community.name">
+      </label>
+      <label class="item item-input">
+        <textarea placeholder="Description" rows="10" ng-model="community.description"></textarea>
+      </label>
 
-        <li class="item item-toggle" style="border: 0px;">
-           <b>Public</b>
-           <label class="toggle toggle-positive">
-             <input type="checkbox">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-           </label>
-        </li>
-      </div>
-    
-    
-      <div class="row">
-        <button class="button button-block button-positive" style="bottom: 10px;">
-          Create
-        </button>
-      </div>
-    
+      <li class="item item-toggle" style="border: 0px;">
+         <b>Public</b>
+         <label class="toggle toggle-positive">
+           <input type="checkbox" ng-model="community.public">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+    </div>
+      
+    <div class="row">
+      <button ng-click="createCommunity(community)" class="button button-block button-positive" style="bottom: 10px;">
+        Create
+      </button>
+    </div>
       
   </ion-content>
 </ion-modal-view>
