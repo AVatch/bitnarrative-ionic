@@ -1,0 +1,38 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Create a Community</h1>
+    <button ng-click="closeModal()" class="button button-icon icon ion-ios-close-empty"></button>
+  </ion-header-bar>
+  <ion-content>
+
+    
+      
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Name">
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="Description" rows="10"></textarea>
+        </label>
+
+        <li class="item item-toggle" style="border: 0px;">
+           <b>Public</b>
+           <label class="toggle toggle-positive">
+             <input type="checkbox">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+           </label>
+        </li>
+      </div>
+    
+    
+      <div class="row">
+        <button class="button button-block button-positive" style="bottom: 10px;">
+          Create
+        </button>
+      </div>
+    
+      
+  </ion-content>
+</ion-modal-view>

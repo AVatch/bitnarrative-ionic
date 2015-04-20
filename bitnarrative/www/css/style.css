@@ -1,0 +1,133 @@
+.topic-grid-container{
+  margin-top: 20px;
+  padding: 15px;
+}
+
+.topic-card{
+    position: relative;
+    width: 90%;
+    height: 0;
+    padding-bottom: 90%;
+    background-color: white;
+}
+.topic-card i{
+  font-size: 50px;
+  width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.content-card-summary{
+  padding: 15px;
+}
+
+
+.content-header{
+  position: relative;
+}
+.content-header .content-header-info{
+  z-index: 1000;
+  position: absolute;
+
+  bottom: 0px;
+  color: white;
+  padding: 15px;
+}
+.content-header-info h2{
+  color: white;
+}
+
+
+
+.content-container{
+  
+}
+
+.content-container img{
+  width: 90%;
+  text-align: center;
+}
+
+.bit-card{
+  padding: 15px;
+}
+.bit-text{
+  
+}
+
+.text{
+    font-family: Open Sans; 
+  font-size: 20px;
+  color: rgb(54, 52, 51);
+  line-height: 125%;
+}
+
+
+.fab{
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background-color: rgb(249, 156, 97);
+  color: white;
+
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+
+  z-index: 9000;
+  text-align: center;
+  font-size: 210%;
+
+  padding-top: 11px;
+
+  box-shadow: 1px 1px 3px #717171;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.spinner svg {
+  width: 88px;
+  height: 88px;
+}
+
+.center{
+  position: relative;
+  left: 42%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.glass {
+  position: relative;
+  padding: 10px 0;
+  border-bottom: 1px solid;
+  border-bottom-color: #ccc;
+  border-bottom-color: rgba(75, 75, 85, 0.9);
+  background-color: rgba(75, 75, 85, 0.9);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  height: 180px;
+}
+
+.spacer{
+  width: 100%;
+  height: 50px;
+}
