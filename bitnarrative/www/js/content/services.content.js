@@ -20,6 +20,18 @@ angular.module('bitnarrative.services.content', [])
       return response;
     };
 
+    var parseContent = function(content){
+      var token = Authentication.pullCachedToken().token;
+      var response = $http({
+                        url: DOMAIN + '/api/v1/content/parse/',
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json',
+                                   'Authorization': 'Token ' + token },
+                        data: content
+                      });
+      return response;
+    };
+
     var getBits = function(pk){
       var token = Authentication.pullCachedToken().token;
       var response = $http({
@@ -34,6 +46,7 @@ angular.module('bitnarrative.services.content', [])
 
     return{
       getContent: getContent,
+      parseContent: parseContent,
       getBits: getBits,
     };
 }])

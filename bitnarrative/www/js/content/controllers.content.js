@@ -1,25 +1,38 @@
 angular.module('bitnarrative.controllers.content', [])
 
 .controller('ContentListController', ['$scope', '$window', '$stateParams',
-  '$ionicModal', 'Community',
-  function($scope, $window, $stateParams, $ionicModal, Community){
+  '$ionicModal', 'Community', 'Content',
+  function($scope, $window, $stateParams, $ionicModal, Community, Content){
 
     $scope.communityID = $stateParams.communityID;
-
     $scope.community = {};
-    Community.getCommunity($scope.communityID).then(function(s){
-      if(s.status==200){
-        $scope.community = s.data;
-      }
-    }, function(e){console.log(e);});
+    var pullCommunity = function(){
+      Community.getCommunity($scope.communityID).then(function(s){
+        if(s.status==200){
+          $scope.community = s.data;
+        }
+      }, function(e){console.log(e);});
+    }; pullCommunity();
+    
 
     $scope.contentList = [];
-    Community.getContentList($scope.communityID).then(function(s){
-      if(s.status==200){
-        $scope.contentList = s.data.results;
-      }
-    }, function(e){console.log(e);});
+    var pullContentList = function(){
+      Community.getContentList($scope.communityID).then(function(s){
+        if(s.status==200){
+          $scope.contentList = s.data.results;
+        }
+      }, function(e){console.log(e);});  
+    }; pullContentList();
+    
 
+
+    $scope.createContent = function(content){
+      content.community = $scope.community.id;
+      Content.parseContent(content).then(function(s){
+        pullContentList();
+        $scope.closeModal();
+      }, function(e){console.log(e);});
+    };
 
     $scope.back = function(){
       $window.history.back();

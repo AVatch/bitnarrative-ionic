@@ -1,9 +1,22 @@
 <ion-modal-view>
   <ion-header-bar>
-    <h1 class="title">Add new content</h1>
+    <h1 class="title">Add New Content</h1>
+    <button ng-click="closeModal()" class="button button-icon icon ion-ios-close-empty"></button>
   </ion-header-bar>
   <ion-content>
-    Hello!
-    <button ng-click="closeModal()">Close</button>
+      
+    <div class="list">
+      <label class="item item-input">
+        <input type="url" placeholder="Article URL" ng-model="content.url">
+      </label>
+    </div>
+
+
+    <div class="row">
+      <button ng-click="createContent(content)" class="button button-block button-positive" style="bottom: 10px;">
+        Create
+      </button>
+    </div>
+    
   </ion-content>
 </ion-modal-view>

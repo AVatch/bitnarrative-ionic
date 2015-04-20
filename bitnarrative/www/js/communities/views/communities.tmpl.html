@@ -5,9 +5,12 @@
 </ion-header-bar>
 
 <ion-content>
-  <div class="list">
 
-    <a ng-repeat="community in communities" class="item item-thumbnail-left item-text-wrap" ui-sref='contents({communityID: {{community.id}} })'>
+  <ion-spinner ng-if="!communitiesLoaded" class="spinner-energized" icon="crescent"></ion-spinner>
+
+  <ion-list ng-if="communitiesLoaded">
+
+    <ion-item ng-repeat="community in communities" class="item item-thumbnail-left item-text-wrap" ui-sref='contents({communityID: {{community.id}} })' can-swipe="listCanSwipe">
       
       <img ng-if="community.lead_image_url" ng-src="{{community.lead_image_url}}">
       <img ng-if="!community.lead_image_url" ng-src="http://placehold.it/350x150">
@@ -15,8 +18,13 @@
       <h2>{{community.community}}</h2>
       <small>{{community.community_description}}</small>
 
-    </a>
+      <ion-option-button class="button-energized"
+                         ng-click="join(community)">
+        Join
+      </ion-option-button>
 
-  </div>
+    </ion-item>
+
+  </ion-list>
   
 </ion-content>
