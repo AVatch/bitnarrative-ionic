@@ -1,8 +1,8 @@
 angular.module('bitnarrative.controllers.communities', [])
 
 .controller('CommunityListController', ['$scope', '$window', '$stateParams',
-  '$ionicModal', 'Topic',
-  function($scope, $window, $stateParams, $ionicModal, Topic){
+  '$ionicModal', 'Account', 'Community', 'Topic',
+  function($scope, $window, $stateParams, $ionicModal, Account, Community, Topic){
     
     // pull the topic
     $scope.topicID = $stateParams.topicID;
@@ -16,17 +16,38 @@ angular.module('bitnarrative.controllers.communities', [])
 
     // pull the communities in the topic
     $scope.communities = [];
-    Topic.getCommunityList($scope.topicID).then(function(s){
-      console.log(s);
-      if(s.status==200){
-        $scope.communities = s.data.results;
-      }
-    }, function(e){console.log(e);});
+    var pullCommunities = function(){
+      Topic.getCommunityList($scope.topicID).then(function(s){
+        if(s.status==200){
+          console.log(s);
+          $scope.communities = s.data.results;
+        }
+      }, function(e){console.log(e);});
+    }; pullCommunities();
 
 
     // create a community
+    $scope.community = {public: true}
     $scope.createCommunity = function(community){
-      console.log(community);
+      // add the topic
+      $scope.community.topics = [$scope.topic.id];
+
+      // add creator
+      Account.me().then(function(s){
+        if(s.status==200){
+          var me = s.data;
+
+          $scope.community.accounts = [me.id];
+
+          // push it through
+          Community.pushCommunity($scope.community).then(function(s){
+            console.log(s);
+            pullCommunities();
+            $scope.closeModal();
+          }, function(e){console.log(e);});
+
+        }
+      }, function(e){console.log(e);});
     };
 
 

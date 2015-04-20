@@ -5,6 +5,8 @@ angular.module('bitnarrative', ['ionic',
 
                                 'bitnarrative.controllers.authentication',
                                 'bitnarrative.services.authentication',
+                                
+                                'bitnarrative.services.accounts',
 
                                 'bitnarrative.controllers.topics',
                                 'bitnarrative.services.topics',
