@@ -77,6 +77,16 @@ angular.module('bitnarrative.controllers.communities', [])
     };
 
     // helper functions
+    $scope.isInCommunity = function(id){
+      // console.log(id);
+      for(var i=0; i<$scope.me.community.length; i++){
+        if(id == $scope.me.community[i]){
+          return true;
+        }
+      }
+      return false;
+    };
+
     $scope.back = function(){
       $window.history.back();
     };

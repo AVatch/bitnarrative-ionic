@@ -20,7 +20,7 @@
 
       <ion-option-button class="button-energized"
                          ng-click="join(community)">
-        Join
+        <i ng-class="{'ion-checkmark-round': isInCommunity(community.id), 'ion-plus-round': !isInCommunity(community.id)}"></i>
       </ion-option-button>
 
     </ion-item>
