@@ -1,15 +1,15 @@
 angular.module('bitnarrative.controllers.communities', [])
 
-.controller('CommunityListController', ['$scope', '$window', '$stateParams',
+.controller('CommunityListController', ['$scope', '$rootScope', '$window', '$stateParams',
   '$ionicModal', 'Account', 'Community', 'Topic',
-  function($scope, $window, $stateParams, $ionicModal, Account, Community, Topic){
+  function($scope, $rootScope, $window, $stateParams, $ionicModal, Account, Community, Topic){
     
     // pull me
-    $scope.me = {};
+    $rootScope.me = {};
     var pullMe = function(){
       Account.me().then(function(s){
         if(s.status==200){
-          $scope.me = s.data;
+          $rootScope.me = s.data;
           console.log($scope.me);
         }
       }, function(e){console.log(e);});
@@ -56,22 +56,30 @@ angular.module('bitnarrative.controllers.communities', [])
       }, function(e){console.log(e);});
     };
 
+
     // join a community
-    $scope.join = function(community){
-      Community.joinCommunity(community.id).then(function(s){
+    $scope.toggleCommunity = function(id){
+      if($scope.isInCommunity(id)){
+        $scope.leave(id);
+      }else{
+        $scope.join(id);
+      }
+    };
+    $scope.join = function(id){
+      Community.joinCommunity(id).then(function(s){
         if(s.status==200){
-          console.log("Successfully Joined");
-          console.log(s);  
+          $rootScope.me.community.push(id);
         }
       }, function(e){console.log(e);});
     };
-
     // leave a community
-    $scope.leave = function(community){
-      Community.leaveCommunity(community.id).then(function(s){
+    $scope.leave = function(id){
+      Community.leaveCommunity(id).then(function(s){
         if(s.status==200){
-          console.log("Successfully Left");
-          console.log(s);  
+          var index = $rootScope.me.community.indexOf(id);
+          if(index > -1){
+            $rootScope.me.community.splice(index, 1);
+          }
         }
       }, function(e){console.log(e);});
     };

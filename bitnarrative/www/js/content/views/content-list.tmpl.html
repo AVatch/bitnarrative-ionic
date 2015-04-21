@@ -1,7 +1,10 @@
 <ion-header-bar class="bar-stable">
   <button ng-click="back()" class="button button-icon icon ion-ios-arrow-left"></button>
   <h1 class="title">{{community.community}}</h1>
-  <button ng-click="openModal()" class="button button-icon icon ion-ios-plus-empty"></button>
+  <div class="buttons">
+    <button ng-click="toggleCommunity(communityID)" class="button button-icon icon" ng-class="{'ion-ios-checkmark-outline': isInCommunity(communityID), 'ion-ios-circle-outline': !isInCommunity(communityID)}"></button>
+    <button ng-click="openModal()" class="button button-icon icon ion-ios-plus-empty"></button>
+  </div>
 </ion-header-bar>
 
 <ion-content>

@@ -43,6 +43,18 @@ angular.module('bitnarrative.services.community', [])
       return response;
     };
 
+    var leaveCommunity = function(pk){
+      var token = Authentication.pullCachedToken().token;
+      var response = $http({
+                        url: DOMAIN + '/api/v1/community/' + pk + '/leave/',
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json',
+                                   'Authorization': 'Token ' + token },
+                      });
+      return response;
+    };
+
+
     var getContentList = function(pk){
       var token = Authentication.pullCachedToken().token;
       var response = $http({
@@ -59,6 +71,7 @@ angular.module('bitnarrative.services.community', [])
       getCommunity: getCommunity,
       pushCommunity: pushCommunity,
       joinCommunity: joinCommunity,
+      leaveCommunity: leaveCommunity,
       getContentList: getContentList,
     };
 }])

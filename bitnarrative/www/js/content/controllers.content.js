@@ -1,8 +1,9 @@
 angular.module('bitnarrative.controllers.content', [])
 
-.controller('ContentListController', ['$scope', '$window', '$stateParams',
+.controller('ContentListController', ['$scope', '$rootScope', '$window', '$stateParams',
   '$ionicModal', 'Community', 'Content',
-  function($scope, $window, $stateParams, $ionicModal, Community, Content){
+  function($scope, $rootScope, $window, $stateParams, $ionicModal, Community,
+    Content){
 
     $scope.communityID = $stateParams.communityID;
     $scope.community = {};
@@ -32,6 +33,45 @@ angular.module('bitnarrative.controllers.content', [])
         pullContentList();
         $scope.closeModal();
       }, function(e){console.log(e);});
+    };
+
+
+    // join a community
+    $scope.toggleCommunity = function(id){
+      if($scope.isInCommunity(id)){
+        $scope.leave(id);
+      }else{
+        $scope.join(id);
+      }
+    };
+    $scope.join = function(id){
+      Community.joinCommunity(id).then(function(s){
+        if(s.status==200){
+          $rootScope.me.community.push(id);
+        }
+      }, function(e){console.log(e);});
+    };
+    // leave a community
+    $scope.leave = function(id){
+      Community.leaveCommunity(id).then(function(s){
+        if(s.status==200){
+          var index = $rootScope.me.community.indexOf(id);
+          if(index > -1){
+            $rootScope.me.community.splice(index, 1);
+          }
+        }
+      }, function(e){console.log(e);});
+    };
+
+
+    // helper
+    $scope.isInCommunity = function(id){
+      for(var i=0; i<$rootScope.me.community.length; i++){
+        if(id == $scope.me.community[i]){
+          return true;
+        }
+      }
+      return false;
     };
 
     $scope.back = function(){
