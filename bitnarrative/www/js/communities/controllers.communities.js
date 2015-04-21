@@ -5,11 +5,11 @@ angular.module('bitnarrative.controllers.communities', [])
   function($scope, $rootScope, $window, $stateParams, $ionicModal, Account, Community, Topic){
     
     // pull me
-    $rootScope.me = {};
+    $scope.me = {};
     var pullMe = function(){
       Account.me().then(function(s){
         if(s.status==200){
-          $rootScope.me = s.data;
+          $scope.me = s.data;
           console.log($scope.me);
         }
       }, function(e){console.log(e);});
@@ -68,7 +68,7 @@ angular.module('bitnarrative.controllers.communities', [])
     $scope.join = function(id){
       Community.joinCommunity(id).then(function(s){
         if(s.status==200){
-          $rootScope.me.community.push(id);
+          $scope.me.community.push(id);
         }
       }, function(e){console.log(e);});
     };
@@ -76,9 +76,9 @@ angular.module('bitnarrative.controllers.communities', [])
     $scope.leave = function(id){
       Community.leaveCommunity(id).then(function(s){
         if(s.status==200){
-          var index = $rootScope.me.community.indexOf(id);
+          var index = $scope.me.community.indexOf(id);
           if(index > -1){
-            $rootScope.me.community.splice(index, 1);
+            $scope.me.community.splice(index, 1);
           }
         }
       }, function(e){console.log(e);});

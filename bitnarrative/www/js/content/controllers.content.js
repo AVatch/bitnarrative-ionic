@@ -1,9 +1,20 @@
 angular.module('bitnarrative.controllers.content', [])
 
-.controller('ContentListController', ['$scope', '$rootScope', '$window', '$stateParams',
-  '$ionicModal', 'Community', 'Content',
-  function($scope, $rootScope, $window, $stateParams, $ionicModal, Community,
+.controller('ContentListController', ['$scope', '$window', '$stateParams',
+  '$ionicModal', 'Account', 'Community', 'Content',
+  function($scope, $window, $stateParams, $ionicModal, Account, Community,
     Content){
+
+    // pull me
+    $scope.me = {};
+    var pullMe = function(){
+      Account.me().then(function(s){
+        if(s.status==200){
+          $scope.me = s.data;
+          console.log($scope.me);
+        }
+      }, function(e){console.log(e);});
+    }; pullMe();
 
     $scope.communityID = $stateParams.communityID;
     $scope.community = {};
@@ -47,7 +58,7 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.join = function(id){
       Community.joinCommunity(id).then(function(s){
         if(s.status==200){
-          $rootScope.me.community.push(id);
+          $scope.me.community.push(id);
         }
       }, function(e){console.log(e);});
     };
@@ -55,9 +66,9 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.leave = function(id){
       Community.leaveCommunity(id).then(function(s){
         if(s.status==200){
-          var index = $rootScope.me.community.indexOf(id);
+          var index = $scope.me.community.indexOf(id);
           if(index > -1){
-            $rootScope.me.community.splice(index, 1);
+            $scope.me.community.splice(index, 1);
           }
         }
       }, function(e){console.log(e);});
@@ -66,7 +77,7 @@ angular.module('bitnarrative.controllers.content', [])
 
     // helper
     $scope.isInCommunity = function(id){
-      for(var i=0; i<$rootScope.me.community.length; i++){
+      for(var i=0; i<$scope.me.community.length; i++){
         if(id == $scope.me.community[i]){
           return true;
         }
