@@ -5,7 +5,7 @@
     <button class="button button-icon icon ion-ios-star-outline"></button>
     <button class="button button-icon icon ion-ios-world-outline"></button>
     <button class="button button-icon icon ion-ios-upload-outline"></button>
-    <button class="button button-icon icon ion-android-more-vertical"></button>
+    <button ng-click="showActionSheet()" class="button button-icon icon ion-android-more-vertical"></button>
   </div>
 </ion-header-bar>
 
@@ -24,10 +24,16 @@
         background-size: cover;">
     </div>
 
-    <div class="content-header-info glass">
-      <h1>{{content.title}}</h1>
+
+    <div class="content-header-info glass" 
+      style="
+        color: white;
+        width: 100%;
+        vertical-align: bottom;">
+      <p style="font-size:250%;">{{content.title}}</p>
       <small>{{content.domain}}</small>
     </div>
+
 
   </div>
 

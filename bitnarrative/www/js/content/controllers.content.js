@@ -105,8 +105,9 @@ angular.module('bitnarrative.controllers.content', [])
 
 
 
-.controller('ContentDetailController', ['$scope', '$window', '$stateParams', 'Content',
-  function($scope, $window, $stateParams, Content){
+.controller('ContentDetailController', ['$scope', '$window', 
+  '$stateParams', '$ionicActionSheet', 'Content',
+  function($scope, $window, $stateParams, $ionicActionSheet, Content){
     
     var contentID = $stateParams.contentID;
 
@@ -138,4 +139,25 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.back = function(){
       $window.history.back();
     };
+
+    // Triggered on a button click, or some other target
+    $scope.showActionSheet = function() {
+     // Show the action sheet
+     var hideSheet = $ionicActionSheet.show({
+       buttons: [
+         { text: 'Option 01' },
+         { text: 'Option 02' }
+       ],
+       destructiveText: 'Flag',
+       titleText: 'Content Options',
+       cancelText: 'Cancel',
+       cancel: function() {
+            // add cancel code..
+          },
+       buttonClicked: function(index) {
+         return true;
+       }
+     });
+    };
+
 }]);
