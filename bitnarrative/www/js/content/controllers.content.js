@@ -106,8 +106,9 @@ angular.module('bitnarrative.controllers.content', [])
 
 
 .controller('ContentDetailController', ['$scope', '$window', 
-  '$stateParams', '$ionicActionSheet', 'Content',
-  function($scope, $window, $stateParams, $ionicActionSheet, Content){
+  '$stateParams', '$ionicActionSheet', 'Content', 'Bit',
+  function($scope, $window, $stateParams, $ionicActionSheet, 
+    Content, Bit){
     
     var contentID = $stateParams.contentID;
 
@@ -133,6 +134,18 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.showingBits = false;
     $scope.toggleContentState = function(){
       $scope.showingBits = !$scope.showingBits
+    };
+
+
+    $scope.upVoteBit = function(bit){
+      Bit.upVote(bit.id).then(function(s){
+        bit.up_count += 1;
+      }, function(e){console.log(e);});
+    };
+    $scope.downVoteBit = function(bit){
+      Bit.downVote(bit.id).then(function(s){
+        bit.down_count += 1;
+      }, function(e){console.log(e);});
     };
     
 

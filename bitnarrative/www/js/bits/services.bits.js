@@ -11,8 +11,8 @@ angular.module('bitnarrative.services.bits', [])
     var upVote = function(pk){
       var token = Authentication.pullCachedToken().token;
       var response = $http({
-                        url: DOMAIN + '/api/v1/content/' + pk.toString() + '/',
-                        method: 'GET',
+                        url: DOMAIN + '/api/v1/bit/' + pk.toString() + '/rate/up/',
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/json',
                                    'Authorization': 'Token ' + token },
                         data: ''
@@ -20,10 +20,20 @@ angular.module('bitnarrative.services.bits', [])
       return response;
     };
 
+    var downVote = function(pk){
+      var token = Authentication.pullCachedToken().token;
+      var response = $http({
+                        url: DOMAIN + '/api/v1/bit/' + pk.toString() + '/rate/down/',
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json',
+                                   'Authorization': 'Token ' + token },
+                        data: ''
+                      });
+      return response;
+    };
 
     return{
-      getContent: getContent,
-      parseContent: parseContent,
-      getBits: getBits,
+      upVote: upVote,
+      downVote: downVote
     };
 }])

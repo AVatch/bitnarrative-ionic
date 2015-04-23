@@ -15,7 +15,9 @@ angular.module('bitnarrative', ['ionic',
                                 'bitnarrative.services.community',
 
                                 'bitnarrative.controllers.content',
-                                'bitnarrative.services.content'])
+                                'bitnarrative.services.content',
+
+                                'bitnarrative.services.bits'])
 
 .run(function($ionicPlatform, $rootScope, $state, $urlRouter, Authentication) {
   $ionicPlatform.ready(function() {

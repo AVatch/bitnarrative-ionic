@@ -49,8 +49,8 @@
 
       <div class="bit-controls">
         <div style="float: right;">
-          <button class="button button-icon icon ion-ios-arrow-up"> {{bit.up_count}}</button>
-          <button class="button button-icon icon ion-ios-arrow-down"> {{bit.down_count}}</button>
+          <button ng-click="upVoteBit(bit)" class="button button-icon icon ion-ios-arrow-up"> {{bit.up_count}}</button>
+          <button ng-click="downVoteBit(bit)" class="button button-icon icon ion-ios-arrow-down"> {{bit.down_count}}</button>
           <button class="button button-icon icon ion-ios-chatboxes-outline"></button>
           <button class="button button-icon icon ion-android-more-vertical"></button>
         </div>
