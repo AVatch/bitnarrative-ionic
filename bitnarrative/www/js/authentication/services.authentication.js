@@ -10,7 +10,7 @@ angular.module('bitnarrative.services.authentication', [])
 
     var registerUser = function(user){
       var response = $http({
-                        url: DOMAIN + '/api/v1/accounts/',
+                        url: DOMAIN + '/api/v1/accounts/create/',
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         data: JSON.stringify(user)
