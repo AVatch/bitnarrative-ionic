@@ -6,15 +6,7 @@ angular.module('bitnarrative.controllers.content', [])
     Content){
 
     // pull me
-    $scope.me = {};
-    var pullMe = function(){
-      Account.me().then(function(s){
-        if(s.status==200){
-          $scope.me = s.data;
-          console.log($scope.me);
-        }
-      }, function(e){console.log(e);});
-    }; pullMe();
+    $scope.me = Account.getMe();
 
     $scope.communityID = $stateParams.communityID;
     $scope.community = {};
@@ -58,7 +50,8 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.join = function(id){
       Community.joinCommunity(id).then(function(s){
         if(s.status==200){
-          $scope.me.community.push(id);
+          $scope.me.community.push(parseInt(id));
+          Account.cacheMe($scope.me);
         }
       }, function(e){console.log(e);});
     };
@@ -66,9 +59,10 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.leave = function(id){
       Community.leaveCommunity(id).then(function(s){
         if(s.status==200){
-          var index = $scope.me.community.indexOf(id);
+          var index = $scope.me.community.indexOf(parseInt(id));
           if(index > -1){
             $scope.me.community.splice(index, 1);
+            Account.cacheMe($scope.me);
           }
         }
       }, function(e){console.log(e);});

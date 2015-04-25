@@ -25,9 +25,11 @@
       <small>{{community.community_description}}</small>
 
       <ion-option-button class="button-energized"
-                         ng-click="toggleCommunity(community.id)">
-        <span>Join</span>
-        <i class="icon" ng-class="{'ion-ios-checkmark-outline': isInCommunity(community.id), 'ion-ios-circle-outline': !isInCommunity(community.id)}"></i>
+                         ng-click="toggleCommunity(community.id)"
+                         style="background-color: #F99C61;">
+        <i 
+          class="icon" 
+          ng-class="{'ion-ios-checkmark-outline': isInCommunity(community.id), 'ion-ios-circle-outline': !isInCommunity(community.id)}"></i>
       </ion-option-button>
 
     </ion-item>

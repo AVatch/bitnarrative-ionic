@@ -60,7 +60,8 @@ angular.module('bitnarrative.controllers.communities', [])
     $scope.join = function(id){
       Community.joinCommunity(id).then(function(s){
         if(s.status==200){
-          $scope.me.community.push(id);
+          $scope.me.community.push(parseInt(id));
+          Account.cacheMe($scope.me);
         }
       }, function(e){console.log(e);});
     };
@@ -68,9 +69,10 @@ angular.module('bitnarrative.controllers.communities', [])
     $scope.leave = function(id){
       Community.leaveCommunity(id).then(function(s){
         if(s.status==200){
-          var index = $scope.me.community.indexOf(id);
+          var index = $scope.me.community.indexOf(parseInt(id));
           if(index > -1){
             $scope.me.community.splice(index, 1);
+            Account.cacheMe($scope.me);
           }
         }
       }, function(e){console.log(e);});
