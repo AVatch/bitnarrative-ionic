@@ -106,8 +106,8 @@ angular.module('bitnarrative.controllers.content', [])
 
 
 .controller('ContentDetailController', ['$scope', '$window', 
-  '$stateParams', '$ionicActionSheet', 'Content', 'Bit',
-  function($scope, $window, $stateParams, $ionicActionSheet, 
+  '$stateParams', '$ionicModal', '$ionicActionSheet', 'Content', 'Bit',
+  function($scope, $window, $stateParams, $ionicModal, $ionicActionSheet, 
     Content, Bit){
     
     var contentID = $stateParams.contentID;
@@ -127,9 +127,12 @@ angular.module('bitnarrative.controllers.content', [])
     Content.getBits(contentID).then(function(s){
       if(s.status==200){
         $scope.bits = s.data.results;
-        console.log($scope.bits);
+        // console.log($scope.bits);
         for(var i=0; i<$scope.bits.length; i++){
           totalBitViews += $scope.bits[i].view_count;
+        }
+        for(var i=0; i<$scope.bits.length; i++){
+          $scope.bits[i].highlight = scaleColor($scope.bits[i]);
         }
       }
     }, function(e){console.log(e);});
@@ -153,30 +156,49 @@ angular.module('bitnarrative.controllers.content', [])
     };
 
 
-    $scope.scaleColor = function(bit){
+
+    $scope.toggleConversation = function(bit){
+      $scope.openModal();
+    };
+
+
+    var scaleColor = function(bit){
       // yellow, red, green
-      var colors = ['FCC755', 'F4324A', '88C425'];
+      var colors = ['#F4F328', '#DF151A', '#00DA3C'];
       var colorIndx = 0;
 
-      var upRatio = bit.up_count;
-      var downRatio = bit.down_count;
-
-      if( Math.abs(upRatio - downRatio) <= 2){
-        colorIndx = 0
-      }else if(Math.abs(upRatio - downRatio) > 2 && upRatio - downRatio > 0){
+      var bitValue = parseFloat( (bit.up_count - bit.down_count) / totalBitViews);
+      if(Math.abs(bitValue) <= 0.3){
+        colorIndx = 0;
+      }else if(bitValue > 0.3){
         colorIndx = 2;
       }else{
         colorIndx = 1;
       }
 
-      return colors[colorIndx];
+      console.log(bit.up_count + ' ' + bit.down_count + ' ' + bitValue);
 
+      return colors[colorIndx];
     };
     
 
     $scope.back = function(){
       $window.history.back();
     };
+
+    $ionicModal.fromTemplateUrl('js/content/views/content-comments.modal.tmpl.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+      $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
+
 
     // Triggered on a button click, or some other target
     $scope.showActionSheet = function() {

@@ -44,22 +44,21 @@
 
   </div>
 
-  <div ng-if="!showingBits" class="content-container text card">
+  <div ng-show="!showingBits" class="content-container text card">
     <div ng-bind-html="content.content" style="padding:15px;"></div>
   </div>
 
-  <div ng-if="showingBits">
-    <div class="card bit-card" ng-repeat="bit in bits" style="border-left: 5px solid red;">
-
-      <div class="bit-color"></div>
+  <div ng-show="showingBits">
+    <div class="card bit-card animated bounceInUp" ng-repeat="bit in bits" style="border-left: 20px solid;" ng-style="{'border-left-color': bit.highlight }">
+    
       <div class="bit-text text"><p ng-bind-html="bit.bit"></p></div>
 
       <div class="bit-controls">
         <div style="float: right;">
           <button ng-click="upVoteBit(bit)" class="button button-icon icon ion-ios-arrow-up"> {{bit.up_count}}</button>
           <button ng-click="downVoteBit(bit)" class="button button-icon icon ion-ios-arrow-down"> {{bit.down_count}}</button>
-          <button class="button button-icon icon ion-ios-chatboxes-outline"></button>
-          <button class="button button-icon icon ion-android-more-vertical"></button>
+          <button ng-click="toggleConversation(bit)" class="button button-icon icon ion-ios-chatboxes-outline"></button>
+          <button class="button button-icon icon ion-ios-upload-outline"></button>
         </div>
       </div>
       
