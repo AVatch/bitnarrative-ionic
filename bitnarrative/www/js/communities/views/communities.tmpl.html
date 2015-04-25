@@ -21,6 +21,20 @@
     ">
   </ion-spinner>
 
+  <div
+    ng-if="communitiesLoaded"
+    class="nocommunities"
+    style="
+      position: absolute;
+      top: 150px;
+      width: 100%;
+      font-size: 300%;
+      text-align: center;
+      color: white;
+      ">
+    <span>No Communities :(</span>
+  </div>
+
   <ion-list>
 
     <ion-item ng-repeat="community in communities" class="item item-thumbnail-left item-text-wrap" ui-sref='contents({communityID: {{community.id}} })' can-swipe="listCanSwipe">

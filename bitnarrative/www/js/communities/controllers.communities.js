@@ -7,7 +7,6 @@ angular.module('bitnarrative.controllers.communities', [])
     // pull me
     $scope.me = Account.getMe();
 
-
     // pull the topic
     $scope.topicID = $stateParams.topicID;
     $scope.topic = {};

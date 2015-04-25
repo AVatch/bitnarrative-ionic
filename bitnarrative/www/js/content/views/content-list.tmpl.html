@@ -23,6 +23,20 @@
       margin-left: 37%;
     ">
   </ion-spinner>
+
+  <div
+    ng-if="contentLoaded"
+    class="nocontent"
+    style="
+      position: absolute;
+      top: 150px;
+      width: 100%;
+      font-size: 300%;
+      text-align: center;
+      color: white;
+      ">
+    <span>No Content :(</span>
+  </div>
   
   <ion-list>
     <ion-item class="card" ng-repeat="content in contentList" style="padding:0px;">

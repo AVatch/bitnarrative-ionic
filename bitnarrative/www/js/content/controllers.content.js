@@ -24,7 +24,7 @@ angular.module('bitnarrative.controllers.content', [])
     var pullContentList = function(){
       Community.getContentList($scope.communityID).then(function(s){
         if(s.status==200){
-          contentLoaded = true;
+          $scope.contentLoaded = true;
           $scope.contentList = s.data.results;
         }
       }, function(e){console.log(e);});  
