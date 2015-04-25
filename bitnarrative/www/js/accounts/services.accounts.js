@@ -19,7 +19,17 @@ angular.module('bitnarrative.services.accounts', [])
       return response;
     };
 
+    var cacheMe = function(me){
+      return localStorageService.set('me', me);
+    };
+
+    var getMe = function(){
+      return localStorageService.get('me');
+    }
+
     return{
-      me: me
+      me: me,
+      cacheMe: cacheMe,
+      getMe: getMe
     };
 }])

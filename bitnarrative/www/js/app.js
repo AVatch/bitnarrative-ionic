@@ -2,6 +2,7 @@
 
 angular.module('bitnarrative', ['ionic',
                                 'LocalStorageModule',
+                                'ngCordova',
 
                                 'bitnarrative.controllers.authentication',
                                 'bitnarrative.services.authentication',
@@ -19,7 +20,7 @@ angular.module('bitnarrative', ['ionic',
 
                                 'bitnarrative.services.bits'])
 
-.run(function($ionicPlatform, $rootScope, $state, $urlRouter, Authentication) {
+.run(function($ionicPlatform, $rootScope, $state, $urlRouter, Authentication, Account) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show
     // the accessory bar above the keyboard for form inputs)
@@ -27,8 +28,19 @@ angular.module('bitnarrative', ['ionic',
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
     if(window.StatusBar) {
-      StatusBar.styleDefault();
+      $cordovaStatusbar.style(1);
     }
+
+
+    // fetch and cache the user object
+    var sessionToken = Authentication.pullCachedToken();
+    if(sessionToken){
+        Account.me().then(function(s){
+          Account.cacheMe(s.data);
+        }, function(e){console.log(e);});
+    }
+
+
   });
 
   // check if the user is authenticated

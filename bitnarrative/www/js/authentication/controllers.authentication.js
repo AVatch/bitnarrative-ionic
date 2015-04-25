@@ -10,15 +10,19 @@ angular.module('bitnarrative.controllers.authentication', [])
 
 }])
 
-.controller('AuthenticationController', ['$scope', '$state', 'Authentication',
-  function($scope, $state, Authentication){
+.controller('AuthenticationController', ['$scope', '$state', 'Authentication', 'Account',
+  function($scope, $state, Authentication, Account){
 
     $scope.authenticate = function(user){
       var request = Authentication.requestToken(user);
       request.then(function(s){
         if(s.status==200){
           Authentication.cacheToken(s.data);
-          $state.go('topics');
+          // cache the me object    
+          Account.me().then(function(s){
+            Account.cacheMe(s.data);
+            $state.go('topics');
+          }, function(e){console.log(e);});
         }
       }, function(e){
         $scope.authError = true;

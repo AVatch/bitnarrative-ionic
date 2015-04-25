@@ -1,12 +1,18 @@
-<ion-header-bar class="bar-stable">
-  <button ng-click="back()" class="button button-icon icon ion-ios-keypad-outline"></button>
-  <h1 class="title">{{topic.topic}}</h1>
-  <button ng-click="openModal()" class="button button-icon icon ion-ios-plus-empty"></button>
+<ion-header-bar class="bar-stable" style="background-color: rgb(242, 54, 78);">
+  <button style="color:white;" ng-click="back()" class="button button-icon icon ion-ios-keypad-outline"></button>
+  <h1 style="color:white;" class="title">{{topic.topic}}</h1>
+  <button style="color:white;" ng-click="openModal()" class="button button-icon icon ion-ios-plus-empty"></button>
 </ion-header-bar>
 
-<ion-content>
+<ion-content style="background-color: rgb(75, 75, 85);">
 
-  <ion-spinner ng-if="!communitiesLoaded" class="spinner-energized" icon="crescent"></ion-spinner>
+  <ion-spinner 
+    ng-if="!communitiesLoaded" class="spinner-energized"icon="crescent"
+    style="
+      position: absolute;
+      top: 150px;
+      margin-left: 37%;
+    "></ion-spinner>
 
   <ion-list ng-if="communitiesLoaded">
 
@@ -20,6 +26,7 @@
 
       <ion-option-button class="button-energized"
                          ng-click="toggleCommunity(community.id)">
+        <span>Join</span>
         <i class="icon" ng-class="{'ion-ios-checkmark-outline': isInCommunity(community.id), 'ion-ios-circle-outline': !isInCommunity(community.id)}"></i>
       </ion-option-button>
 

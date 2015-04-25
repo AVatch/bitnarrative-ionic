@@ -123,10 +123,14 @@ angular.module('bitnarrative.controllers.content', [])
 
 
     $scope.bits = [];
+    var totalBitViews = 1;
     Content.getBits(contentID).then(function(s){
       if(s.status==200){
         $scope.bits = s.data.results;
         console.log($scope.bits);
+        for(var i=0; i<$scope.bits.length; i++){
+          totalBitViews += $scope.bits[i].view_count;
+        }
       }
     }, function(e){console.log(e);});
 
@@ -146,6 +150,27 @@ angular.module('bitnarrative.controllers.content', [])
       Bit.downVote(bit.id).then(function(s){
         bit.down_count += 1;
       }, function(e){console.log(e);});
+    };
+
+
+    $scope.scaleColor = function(bit){
+      // yellow, red, green
+      var colors = ['FCC755', 'F4324A', '88C425'];
+      var colorIndx = 0;
+
+      var upRatio = bit.up_count;
+      var downRatio = bit.down_count;
+
+      if( Math.abs(upRatio - downRatio) <= 2){
+        colorIndx = 0
+      }else if(Math.abs(upRatio - downRatio) > 2 && upRatio - downRatio > 0){
+        colorIndx = 2;
+      }else{
+        colorIndx = 1;
+      }
+
+      return colors[colorIndx];
+
     };
     
 

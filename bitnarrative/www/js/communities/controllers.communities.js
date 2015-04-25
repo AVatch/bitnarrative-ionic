@@ -5,15 +5,7 @@ angular.module('bitnarrative.controllers.communities', [])
   function($scope, $rootScope, $window, $stateParams, $ionicModal, Account, Community, Topic){
     
     // pull me
-    $scope.me = {};
-    var pullMe = function(){
-      Account.me().then(function(s){
-        if(s.status==200){
-          $scope.me = s.data;
-          console.log($scope.me);
-        }
-      }, function(e){console.log(e);});
-    }; pullMe();
+    $scope.me = Account.getMe();
 
 
     // pull the topic
