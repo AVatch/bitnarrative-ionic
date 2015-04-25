@@ -180,6 +180,40 @@ angular.module('bitnarrative.controllers.content', [])
 
       return colors[colorIndx];
     };
+
+
+
+    var traverse = function(el, container){
+      // Traverses the Dom tree rooted by el
+      // In-order traversal.
+      var children = angular.element(el).children();
+
+      for(var c = 0; c < children.length; c++){
+        // only store the <p>
+        if(children[c].nodeName == "P" || children[c].nodeName == "BLOCKQUOTE"){
+          container.push(children[c]);
+        }
+        traverse(children[c], container);
+      }
+    };
+
+    var wrapSentences = function(ref, n){
+      // Wraps all the sentences with
+      // spans with a unique id
+      var txt = ref.innerHTML;
+      var sentences = txt.split('. ');
+      var nSentences = sentences.length;
+      for(var s = 0; s<nSentences; s++){
+        sentences[s] = '<span class="sentenceBits" id=' + (n + s) + ' ng-click="selectBit($event, ' + (n + s) + ')" style="background-color:none;">' + sentences[s] + '</span>';
+      }
+
+      ref.innerHTML = sentences.join('. ');
+      return [ref, nSentences];
+    };
+
+
+    
+
     
 
     $scope.back = function(){

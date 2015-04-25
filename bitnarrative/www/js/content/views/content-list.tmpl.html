@@ -16,7 +16,9 @@
   </ion-refresher>
 
   <ion-spinner
-    ng-if="!contentLoaded" class="spinner-energized"icon="crescent"
+    ng-if="!contentLoaded" 
+    class="spinner-energized" 
+    icon="crescent"
     style="
       position: absolute;
       top: 150px;
@@ -25,7 +27,7 @@
   </ion-spinner>
 
   <div
-    ng-if="contentLoaded"
+    ng-if="contentLoaded && contentList.length==0"
     class="nocontent"
     style="
       position: absolute;
