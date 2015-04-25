@@ -12,7 +12,9 @@
 <ion-content style="background-color: rgb(75, 75, 85);">
 
   <ion-spinner
-    ng-if="!contentLoaded" class="spinner-energized"icon="crescent"
+    ng-if="!contentLoaded" 
+    class="spinner-energized"
+    icon="crescent"
     style="
       position: absolute;
       top: 150px;
@@ -21,6 +23,7 @@
   </ion-spinner>
 
   <div ng-if="contentLoad" class="content-header">
+    
     <div
       style="
         width: 100%;
@@ -44,7 +47,7 @@
 
   </div>
 
-  <div ng-show="!showingBits" class="content-container text card">
+  <div ng-if="!showingBits && contentLoad" class="content-container text card">
     <div ng-bind-html="content.content" style="padding:15px;"></div>
   </div>
 
