@@ -8,6 +8,21 @@
 </ion-header-bar>
 
 <ion-content style="background-color: rgb(75, 75, 85);">
+
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()"
+    spinner="crescent">
+  </ion-refresher>
+
+  <ion-spinner
+    ng-if="!contentLoaded" class="spinner-energized"icon="crescent"
+    style="
+      position: absolute;
+      top: 150px;
+      margin-left: 37%;
+    ">
+  </ion-spinner>
   
   <ion-list>
     <ion-item class="card" ng-repeat="content in contentList" style="padding:0px;">

@@ -89,6 +89,10 @@ angular.module('bitnarrative.controllers.communities', [])
       return false;
     };
 
+    $scope.doRefresh = function(){
+      $scope.$broadcast('scroll.refreshComplete');
+    };
+
     $scope.back = function(){
       $window.history.back();
     };

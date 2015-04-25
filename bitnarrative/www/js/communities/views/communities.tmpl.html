@@ -6,15 +6,22 @@
 
 <ion-content style="background-color: rgb(75, 75, 85);">
 
-  <ion-spinner 
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()"
+    spinner="crescent">
+  </ion-refresher>
+
+  <ion-spinner
     ng-if="!communitiesLoaded" class="spinner-energized"icon="crescent"
     style="
       position: absolute;
       top: 150px;
       margin-left: 37%;
-    "></ion-spinner>
+    ">
+  </ion-spinner>
 
-  <ion-list ng-if="communitiesLoaded">
+  <ion-list>
 
     <ion-item ng-repeat="community in communities" class="item item-thumbnail-left item-text-wrap" ui-sref='contents({communityID: {{community.id}} })' can-swipe="listCanSwipe">
       

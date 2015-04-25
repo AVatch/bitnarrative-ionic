@@ -20,9 +20,11 @@ angular.module('bitnarrative.controllers.content', [])
     
 
     $scope.contentList = [];
+    $scope.contentLoaded = false;
     var pullContentList = function(){
       Community.getContentList($scope.communityID).then(function(s){
         if(s.status==200){
+          contentLoaded = true;
           $scope.contentList = s.data.results;
         }
       }, function(e){console.log(e);});  
@@ -81,6 +83,10 @@ angular.module('bitnarrative.controllers.content', [])
 
     $scope.back = function(){
       $window.history.back();
+    };
+
+    $scope.doRefresh = function(){
+      $scope.$broadcast('scroll.refreshComplete');
     };
 
     $ionicModal.fromTemplateUrl('js/content/views/content-add.modal.tmpl.html', {
