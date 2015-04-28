@@ -106,9 +106,9 @@ angular.module('bitnarrative.controllers.content', [])
 
 
 .controller('ContentDetailController', ['$scope', '$sce', '$window', 
-  '$stateParams', '$ionicModal', '$ionicActionSheet', 'Content', 'Bit',
+  '$stateParams', '$ionicModal', '$ionicActionSheet', '$ionicPopover', 'Content', 'Bit',
   function($scope, $sce, $window, $stateParams, $ionicModal, $ionicActionSheet, 
-    Content, Bit){
+    $ionicPopover, Content, Bit){
     
     var contentID = $stateParams.contentID;
 
@@ -302,13 +302,46 @@ angular.module('bitnarrative.controllers.content', [])
       return el.childNodes[0];
     };
 
-    
+
+    $scope.selectBit = function($event, id){
+      console.log("clicked on " + id);
+      $scope.openPopover($event);
+    };
 
     
 
     $scope.back = function(){
       $window.history.back();
     };
+
+
+
+    // .fromTemplateUrl() method
+    $ionicPopover.fromTemplateUrl('js/content/views/bit.popover.tmpl.html', {
+      scope: $scope
+    }).then(function(popover) {
+      $scope.popover = popover;
+    });
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function() {
+      $scope.popover.remove();
+    });
+    // Execute action on hide popover
+    $scope.$on('popover.hidden', function() {
+      // Execute action
+    });
+    // Execute action on remove popover
+    $scope.$on('popover.removed', function() {
+      // Execute action
+    });
+
+
 
     $ionicModal.fromTemplateUrl('js/content/views/content-comments.modal.tmpl.html', {
       scope: $scope,
@@ -334,6 +367,26 @@ angular.module('bitnarrative.controllers.content', [])
        ],
        destructiveText: 'Flag',
        titleText: 'Content Options',
+       cancelText: 'Cancel',
+       cancel: function() {
+            // add cancel code..
+          },
+       buttonClicked: function(index) {
+         return true;
+       }
+     });
+    };
+
+    $scope.shareActionSheet = function() {
+     // Show the action sheet
+     var hideSheet = $ionicActionSheet.show({
+       buttons: [
+         { text: 'Facebook' },
+         { text: 'Twitter' },
+         { text: 'Email' },
+         { text: 'SMS' }
+       ],
+       titleText: 'Share Bit',
        cancelText: 'Cancel',
        cancel: function() {
             // add cancel code..

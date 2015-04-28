@@ -2,7 +2,7 @@
   <button style="color:white;" ng-click="back()" class="button button-icon icon ion-ios-arrow-left"></button>
   <h1 style="color:white;" class="title"></h1>
   <div class="buttons">
-    <button ng-click="toggleOverlay()" style="color:white;" class="button button-icon icon ion-ios-star-outline"></button>
+    <button ng-click="toggleOverlay()" style="color:white;" class="button button-icon icon ion-ios-list-outline"></button>
     <button style="color:white;" class="button button-icon icon ion-ios-world-outline"></button>
     <button style="color:white;" class="button button-icon icon ion-ios-upload-outline"></button>
     <button style="color:white;" ng-click="showActionSheet()" class="button button-icon icon ion-android-more-vertical"></button>
@@ -49,7 +49,7 @@
   </div>
 
   <div ng-if="!showingBits && contentLoad" class="content-container text card">
-    <div ng-bind-html="content.content" style="padding:15px;"></div>
+    <div dynamic="content.content" style="padding:15px;"></div>
   </div>
 
   <div ng-show="showingBits">
@@ -62,7 +62,7 @@
           <button ng-click="upVoteBit(bit)" class="button button-icon icon ion-ios-arrow-up"> {{bit.up_count}}</button>
           <button ng-click="downVoteBit(bit)" class="button button-icon icon ion-ios-arrow-down"> {{bit.down_count}}</button>
           <button ng-click="toggleConversation(bit)" class="button button-icon icon ion-ios-chatboxes-outline"></button>
-          <button class="button button-icon icon ion-ios-upload-outline"></button>
+          <button ng-click="shareActionSheet()" class="button button-icon icon ion-ios-upload-outline"></button>
         </div>
       </div>
       
