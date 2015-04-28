@@ -105,9 +105,9 @@ angular.module('bitnarrative.controllers.content', [])
 
 
 
-.controller('ContentDetailController', ['$scope', '$window', 
+.controller('ContentDetailController', ['$scope', '$sce', '$window', 
   '$stateParams', '$ionicModal', '$ionicActionSheet', 'Content', 'Bit',
-  function($scope, $window, $stateParams, $ionicModal, $ionicActionSheet, 
+  function($scope, $sce, $window, $stateParams, $ionicModal, $ionicActionSheet, 
     Content, Bit){
     
     var contentID = $stateParams.contentID;
@@ -117,6 +117,7 @@ angular.module('bitnarrative.controllers.content', [])
     Content.getContent(contentID).then(function(s){
       if(s.status==200){
         $scope.content = s.data;
+        $scope.content.content = prepareContent($scope.content.content);
         $scope.contentLoad = true;
       }
     },function(e){console.log(e);});
@@ -126,8 +127,8 @@ angular.module('bitnarrative.controllers.content', [])
     var totalBitViews = 1;
     Content.getBits(contentID).then(function(s){
       if(s.status==200){
+        console.log(s.data.results);
         $scope.bits = s.data.results;
-        // console.log($scope.bits);
         for(var i=0; i<$scope.bits.length; i++){
           totalBitViews += $scope.bits[i].view_count;
         }
@@ -162,26 +163,109 @@ angular.module('bitnarrative.controllers.content', [])
     };
 
 
+    var scopeToggle = false;
+    $scope.toggleOverlay = function(){
+      if(!scopeToggle){
+        scopeToggle = true;
+        var c = {'#4AFF32': ['74','255','50'], 
+                 '#96FF31': ['150','255','46'], 
+                 '#BFFF2B': ['191','255','43'],
+                 '#E2FF2A': ['226','255','42'],
+                 '#FFFF28': ['255','255','40'],
+                 '#FFDF2A': ['255','223','42'],
+                 '#FFBC2B': ['255','188','43'],
+                 '#FF8D2E': ['255','141','46'],
+                 '#FF642F': ['255','100','47'],
+                 '#FF3232': ['255','50','50']}
+
+        for(var i=0; i<$scope.bits.length; i++){
+          
+          document.getElementById(i).style['background-color']="rgba("+c[$scope.bits[i].highlight][0]+","+c[$scope.bits[i].highlight][1]+","+c[$scope.bits[i].highlight][2]+", 0.8)";
+          document.getElementById(i).style['box-shadow']="0px 0px 2px 1px rgba("+c[$scope.bits[i].highlight][0]+","+c[$scope.bits[i].highlight][1]+","+c[$scope.bits[i].highlight][2]+", 0.8)";
+        }  
+      }else{
+        scopeToggle = false;
+        for(var i=0; i<$scope.bits.length; i++){
+          document.getElementById(i).style['background-color']="white";
+          document.getElementById(i).style['box-shadow']="none";
+        }  
+      }
+      
+    };
+
     var scaleColor = function(bit){
-      // yellow, red, green
-      var colors = ['#F4F328', '#DF151A', '#00DA3C'];
+      // red, yello, green
+
+      // (74,255,50)  -> #4AFF32
+      // (150,255,46) -> #96FF31
+      // (191,255,43) -> #BFFF2B
+      // (226,255,42) -> #E2FF2A
+      // (255,255,40) -> #FFFF28
+      // (255,223,42) -> #FFDF2A
+      // (255,188,43) -> #FFBC2B
+      // (255,141,46) -> #FF8D2E
+      // (255,100,47) -> #FF642F
+      // (255,50,50)  -> #FF3232
+      var colors = ['#FF3232', '#FF642F', '#FF8D2E', '#FFBC2B', '#FFDF2A',
+                    '#FFFF28', '#E2FF2A', '#BFFF2B', '#96FF31', '#4AFF32'] 
       var colorIndx = 0;
 
-      var bitValue = parseFloat( (bit.up_count - bit.down_count) / totalBitViews);
-      if(Math.abs(bitValue) <= 0.3){
-        colorIndx = 0;
-      }else if(bitValue > 0.3){
-        colorIndx = 2;
+      var bitValue = parseFloat( (bit.up_count - bit.down_count) / (1 + bit.up_count + bit.down_count));
+
+      console.log(bit.up_count + '\t' + bit.down_count + '\t' + (bit.up_count + bit.down_count) + '\t' + bitValue)
+
+      if(bitValue <= -0.8){
+        colorIndx = 0
+      }else if(bitValue <= -0.6 && bitValue > -0.8){
+        colorIndx = 1
+      }else if(bitValue <= -0.4 && bitValue > -0.6){
+        colorIndx = 2
+      }else if(bitValue <= -0.2 && bitValue > -0.4){
+        colorIndx = 3
+      }else if(bitValue <= 0.0 && bitValue > -0.2){
+        colorIndx = 4
+      }else if(bitValue <= 0.2 && bitValue > 0.0){
+        colorIndx = 5
+      }else if(bitValue <= 0.4 && bitValue > 0.2){
+        colorIndx = 6
+      }else if(bitValue <= 0.6 && bitValue > 0.4){
+        colorIndx = 7
+      }else if(bitValue <= 0.8 && bitValue > 0.6){
+        colorIndx = 8
       }else{
-        colorIndx = 1;
+        colorIndx = 9
       }
-
-      console.log(bit.up_count + ' ' + bit.down_count + ' ' + bitValue);
-
       return colors[colorIndx];
     };
 
 
+
+    var prepareContent = function(rawContent){
+        /**
+         * Wraps every sentence with an 
+         * ng-click listener.
+         * -- for now every <p>
+         */
+        var wrappedContent = '';
+
+        // remove <em> tags..TBD - filter out other unwanted tags
+        rawContent = rawContent.replace(/<\/?em[^>]*>/g,"");
+        // convert to HTML
+        htmlContent = stringToHTML(rawContent);
+        // pull out references to the <p>
+        var pReferences = [];    
+        traverse(htmlContent, pReferences);
+        var nSentences = 0;
+        for(var p = 0; p < pReferences.length; p++){
+          output = wrapSentences(pReferences[p], nSentences);
+          pReferences[p] = output[0];
+          nSentences += parseInt(output[1]);
+        }
+
+        // Sanitize it so angular is a happy puppy
+        var sanitizedContent = $sce.trustAsHtml(htmlContent.innerHTML);
+        return sanitizedContent;
+    };
 
     var traverse = function(el, container){
       // Traverses the Dom tree rooted by el
@@ -211,6 +295,12 @@ angular.module('bitnarrative.controllers.content', [])
       return [ref, nSentences];
     };
 
+    // Convert String to HTML
+    var stringToHTML = function(string) {
+      var el = document.createElement('div');
+      el.innerHTML = string;
+      return el.childNodes[0];
+    };
 
     
 
