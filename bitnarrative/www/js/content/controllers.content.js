@@ -179,7 +179,6 @@ angular.module('bitnarrative.controllers.content', [])
                  '#FF3232': ['255','50','50']}
 
         for(var i=0; i<$scope.bits.length; i++){
-          
           document.getElementById(i).style['background-color']="rgba("+c[$scope.bits[i].highlight][0]+","+c[$scope.bits[i].highlight][1]+","+c[$scope.bits[i].highlight][2]+", 0.8)";
           document.getElementById(i).style['box-shadow']="0px 0px 2px 1px rgba("+c[$scope.bits[i].highlight][0]+","+c[$scope.bits[i].highlight][1]+","+c[$scope.bits[i].highlight][2]+", 0.8)";
         }  
@@ -303,12 +302,13 @@ angular.module('bitnarrative.controllers.content', [])
     };
 
 
+    $scope.focusedBit = {};
     $scope.selectBit = function($event, id){
-      console.log("clicked on " + id);
+      $scope.focusedBit = $scope.bits[id];
       $scope.openPopover($event);
     };
 
-    
+
 
     $scope.back = function(){
       $window.history.back();

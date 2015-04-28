@@ -1,14 +1,13 @@
 <ion-popover-view style="width:320px; height:230px;">
   <ion-content>
     
-  <p style="padding-top:20px; padding-left:20px; padding-right:20px;">Contextly, the startup founded by former Wired editor Ryan Singel, is giving readers an easy way to stay up-to-date on the news that interests them. Specifically, the company has launched a new Follow This Story button that publishers can add to their stories
-  </p>
-
+  <p ng-bind-html="focusedBit.bit" style="padding-top:20px; padding-left:20px; padding-right:20px;"></p>
+  
   <div class="bit-controls">
     <div style="float: right; padding-right:20px">
-      <button ng-click="upVoteBit(bit)" class="button button-icon icon ion-ios-arrow-up"> {{bit.up_count}}</button>
-      <button ng-click="downVoteBit(bit)" class="button button-icon icon ion-ios-arrow-down"> {{bit.down_count}}</button>
-      <button ng-click="toggleConversation(bit)" class="button button-icon icon ion-ios-chatboxes-outline"></button>
+      <button ng-click="upVoteBit(focusedBit)" class="button button-icon icon ion-ios-arrow-up"> {{focusedBit.up_count}}</button>
+      <button ng-click="downVoteBit(focusedBit)" class="button button-icon icon ion-ios-arrow-down"> {{focusedBit.down_count}}</button>
+      <button ng-click="toggleConversation(focusedBit)" class="button button-icon icon ion-ios-chatboxes-outline"></button>
       <button ng-click="shareActionSheet()" class="button button-icon icon ion-ios-upload-outline"></button>
     </div>
   </div>
