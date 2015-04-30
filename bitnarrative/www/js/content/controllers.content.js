@@ -167,16 +167,11 @@ angular.module('bitnarrative.controllers.content', [])
     $scope.toggleOverlay = function(){
       if(!scopeToggle){
         scopeToggle = true;
-        var c = {'#4AFF32': ['74','255','50'], 
-                 '#96FF31': ['150','255','46'], 
-                 '#BFFF2B': ['191','255','43'],
-                 '#E2FF2A': ['226','255','42'],
-                 '#FFFF28': ['255','255','40'],
-                 '#FFDF2A': ['255','223','42'],
-                 '#FFBC2B': ['255','188','43'],
-                 '#FF8D2E': ['255','141','46'],
-                 '#FF642F': ['255','100','47'],
-                 '#FF3232': ['255','50','50']}
+        var c = {'#DF151A': ['223','21','26'], 
+                 '#FBB9C3': ['251','185','195'], 
+                 '#F4F328': ['244','243','40'],
+                 '#BCEDC3': ['188','237','195'],
+                 '#00DA3C': ['0','218','60']}
 
         for(var i=0; i<$scope.bits.length; i++){
           document.getElementById(i).style['background-color']="rgba("+c[$scope.bits[i].highlight][0]+","+c[$scope.bits[i].highlight][1]+","+c[$scope.bits[i].highlight][2]+", 0.8)";
@@ -205,34 +200,23 @@ angular.module('bitnarrative.controllers.content', [])
       // (255,141,46) -> #FF8D2E
       // (255,100,47) -> #FF642F
       // (255,50,50)  -> #FF3232
-      var colors = ['#FF3232', '#FF642F', '#FF8D2E', '#FFBC2B', '#FFDF2A',
-                    '#FFFF28', '#E2FF2A', '#BFFF2B', '#96FF31', '#4AFF32'] 
+      var colors = ['#DF151A', '#FBB9C3', '#F4F328', '#BCEDC3', '#00DA3C'] 
       var colorIndx = 0;
 
       var bitValue = parseFloat( (bit.up_count - bit.down_count) / (1 + bit.up_count + bit.down_count));
 
       console.log(bit.up_count + '\t' + bit.down_count + '\t' + (bit.up_count + bit.down_count) + '\t' + bitValue)
 
-      if(bitValue <= -0.8){
+      if(bitValue <= -0.6){
         colorIndx = 0
-      }else if(bitValue <= -0.6 && bitValue > -0.8){
+      }else if(bitValue <= -0.2 && bitValue > -0.6){
         colorIndx = 1
-      }else if(bitValue <= -0.4 && bitValue > -0.6){
+      }else if(bitValue <= 0.2 && bitValue > -0.2){
         colorIndx = 2
-      }else if(bitValue <= -0.2 && bitValue > -0.4){
+      }else if(bitValue <= 0.6 && bitValue > 0.2){
         colorIndx = 3
-      }else if(bitValue <= 0.0 && bitValue > -0.2){
-        colorIndx = 4
-      }else if(bitValue <= 0.2 && bitValue > 0.0){
-        colorIndx = 5
-      }else if(bitValue <= 0.4 && bitValue > 0.2){
-        colorIndx = 6
-      }else if(bitValue <= 0.6 && bitValue > 0.4){
-        colorIndx = 7
-      }else if(bitValue <= 0.8 && bitValue > 0.6){
-        colorIndx = 8
       }else{
-        colorIndx = 9
+        colorIndx = 4
       }
       return colors[colorIndx];
     };
